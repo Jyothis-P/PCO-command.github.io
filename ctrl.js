@@ -59,29 +59,36 @@ function getparticipants() {
 
 
 function login() {
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function () {
+     var xhttp = new XMLHttpRequest();
 
-        firebase.auth().signInWithEmailAndPassword(email, password).then(function () {
-            alert("successful");
-            // getparticipants();
+    var client_id = "6c63dbb7e392cbcebd4fa6b487d9ee52ba760d12de39.api.hackerearth.com";
+    var client_secret = "d1c781782f80e7f08464e9c1d252d9d7939ee85d";
+    var test_id = 654823;
 
-        }).catch(function (error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            alert(errorMessage);
-            event_name = 'def';
-            document.getElementById("ename").innerText = '';
+    var payload = {
+        'client_id': client_id,
+        'client_secret': client_secret,
+        'test_id': test_id,
+        'emails': ['jyothisp52@gmail.com', 'akul753.com', 'mail@akuls.co'],
+        'send_email': false,
+        'extra_parameters': {
+            'candidate_names': {
+                'jyothisp52@gmail.com': 'JP',
+                'akul753.com': 'Akul',
+                'mail@akuls.co': 'Awesome'
+            }
+        }
+    };
 
-            tble = document.getElementById("userbody");
-            tble.innerHTML = "";
-            firebase.auth().signOut();
-
-        });
-
-    })
-
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("head").innerHTML =
+                this.status;
+        }
+    };
+    xhttp.open("POST", "https://api.hackerearth.com/recruiter/v1/tests/invite/", true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(payload));
 }
 
 
