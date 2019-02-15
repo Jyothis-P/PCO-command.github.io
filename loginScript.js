@@ -38,6 +38,7 @@ function sendLink() {
     // xhhr.open("POST", "https://api.hackerearth.com/recruiter/v1/tests/invite/");
     // xhhr.send(JSON.stringify(payload));
     xhttp.open("POST", "https://api.hackerearth.com/recruiter/v1/tests/invite/", true);
+    xhttp.setRequestHeader('Access-Control-Allow-Origin', '*');
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(payload));
 }
